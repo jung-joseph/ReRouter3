@@ -118,7 +118,7 @@ struct SearchOptionsView: View {
                 Text("Clear All Destinations")
             }
             .buttonStyle(.borderedProminent)
-            .tint(Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
+            .tint(finalDestination != nil || waypointDestination != nil ? .green : Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
             .foregroundColor(.black)
             .padding(4)
             
@@ -128,7 +128,7 @@ struct SearchOptionsView: View {
                 Text("Clear Final Destination")
             }
             .buttonStyle(.borderedProminent)
-            .tint(Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
+            .tint(finalDestination != nil ? .green : Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
             .foregroundColor(.black)
             .padding(4)
             
@@ -138,7 +138,7 @@ struct SearchOptionsView: View {
                 Text("Clear Waypoint Destination")
             }
             .buttonStyle(.borderedProminent)
-            .tint(Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
+            .tint(waypointDestination != nil ? .green :Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
             .foregroundColor(.black)
             .padding(4)
         }

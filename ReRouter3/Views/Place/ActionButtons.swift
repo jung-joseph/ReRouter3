@@ -53,7 +53,7 @@ struct ActionButtons: View {
                         
                     }
                 }
-
+                
             }
             .buttonStyle(.bordered)
             
@@ -102,61 +102,67 @@ struct ActionButtons: View {
                                 .font(.system(size: 10))
                         }
                     }).buttonStyle(.bordered)
+                        .tint(waypointDestination != nil ? .green : .gray )
+                    
                 }
-//                MARK: - Set as Final Destination
+                //                MARK: - Set as Final Destination
                 HStack {
                     Button {
                         finalDestination = mapItem
                         print("finalDestination: \(String(describing: finalDestination!.name))")
-
+                        
                     } label: {
                         HStack{
                             Text("Set as Final Destination")
                                 .font(.system(size: 10))
                         }
                     }
-
+                    .buttonStyle(.bordered)
+                    
+                    .tint(finalDestination != nil ? .green : .gray )
                 }
+                
             }
-            .buttonStyle(.bordered)
+            
+            
             VStack{
-            //   MARK: - Website Link
-            if let url = mapItem?.url {
-                HStack{
-                    Link(destination: url, label: {
-                        HStack{
-                            Image(systemName: "link")
-                            Text("Website")
+                //   MARK: - Website Link
+                if let url = mapItem?.url {
+                    HStack{
+                        Link(destination: url, label: {
+                            HStack{
+                                Image(systemName: "link")
+                                Text("Website")
+                                    .font(.system(size: 10))
+                                
+                            }
+                        }).buttonStyle(.bordered)
+                    }
+                }
+                //MARK: - phone button
+                if mapItem?.phoneNumber != nil {
+                    Button(action: {
+                        if let phone = mapItem?.phoneNumber {
+                            let numericPhoneNumber = phone.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+                            makeCall(phone: numericPhoneNumber)
+                        }
+                    }, label: {
+                        HStack {
+                            Image(systemName: "phone.fill")
+                            Text("Call")
                                 .font(.system(size: 10))
                             
                         }
                     }).buttonStyle(.bordered)
                 }
             }
-            //MARK: - phone button
-            if mapItem?.phoneNumber != nil {
-                Button(action: {
-                    if let phone = mapItem?.phoneNumber {
-                        let numericPhoneNumber = phone.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-                        makeCall(phone: numericPhoneNumber)
-                    }
-                }, label: {
-                    HStack {
-                        Image(systemName: "phone.fill")
-                        Text("Call") 
-                            .font(.system(size: 10))
-
-                    }
-                }).buttonStyle(.bordered)
-            }
-        }
-                
-            }
             
         }
         
     }
-
+    
+    
+}
 
 
 //#Preview {
