@@ -43,15 +43,15 @@ struct DestinationsView: View {
                         .onDelete{ indexSet in
                             destinationMapItems.remove(atOffsets: indexSet)
                         }
-                        .task(id: selectedMapItem){
-                            mapItems.removeAll()
-                            if selectedMapItem != nil {
-//                                Marker(item: selectedDestinationMapItem!)
-                                await route = requestCalculateDirections(selectedMapItem: selectedMapItem, locationManager: locationManager, transportationType: transportationType)
-                                //                showSearchView = true
-                                print("IN .task destinationView")
-                            }
-                        }
+//                        .task(id: selectedMapItem){
+//                            mapItems.removeAll()
+//                            if selectedMapItem != nil {
+////                                Marker(item: selectedDestinationMapItem!)
+//                                await route = requestCalculateDirections(selectedMapItem: selectedMapItem, locationManager: locationManager, transportationType: transportationType)
+//                                //                showSearchView = true
+//                                print("IN .task destinationView")
+//                            }
+//                        }
                     }
                     .navigationBarItems(leading: EditButton())
                     .environment(\.editMode, $editMode)
