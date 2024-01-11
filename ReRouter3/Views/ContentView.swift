@@ -75,16 +75,13 @@ struct ContentView: View {
                             Marker(item: mapItem)
                         }
                     }
-                    //                if let selectedDestinationMapItem {
-                    //
-                    //                    Marker(item: selectedDestinationMapItem)
-                    //                }
-//                    var counter = 0
-//                    for index in routes {
-//                        counter += 1
-//                        print("counter: \(counter)")
-//                    }
-//                    let route1 = routes[0]
+                    if let waypointDestination{
+                        Marker(item: waypointDestination)
+
+                    }
+                    if let finalDestination {
+                        Marker(item: finalDestination)
+                    }
                     if let route1 {
                         MapPolyline(route1)
                             .stroke(.blue, lineWidth: 5)
