@@ -12,16 +12,23 @@ import MapKit
 //    MKMapItem.openMaps(with: [destination])
 //}
 
-func requestCalculateDirections(selectedMapItem: MKMapItem?, locationManager:LocationManager, transportationType: TransportationOptions) async -> MKRoute? {
+func requestCalculateDirections(beginningMapItem: MKMapItem?, endingMapItem: MKMapItem?, locationManager:LocationManager, transportationType: TransportationOptions) async -> MKRoute? {
 //    route = nil
-    if let selectedMapItem {
-        guard let currentUserLocation = locationManager.manager.location else {
-            return nil}
-        let startingMapItem = MKMapItem(placemark: MKPlacemark(coordinate: currentUserLocation.coordinate))
+//    if let selectedMapItem {
+    
+    
+//    if let selectedMapItem {
+//        guard let currentUserLocation = locationManager.manager.location else {
+//            return nil}
         
+//        let startingMapItem = MKMapItem(placemark: MKPlacemark(coordinate: currentUserLocation.coordinate))
         
-        return  await calculateDirections(from: startingMapItem, to: selectedMapItem, transportationType: transportationType)
-        
+    if let beginningMapItem {
+        if let endingMapItem {
+            //        return  await calculateDirections(from: startingMapItem, to: selectedMapItem!, transportationType: transportationType)
+            return  await calculateDirections(from: beginningMapItem, to: endingMapItem, transportationType: transportationType)
+        }
+        return nil
     } else {
         return nil
     }

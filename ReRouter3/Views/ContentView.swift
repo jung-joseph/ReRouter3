@@ -26,6 +26,9 @@ struct ContentView: View {
     @State var mapItems: [MKMapItem] = []
     @State var selectedMapItem: MKMapItem?
     @State var route: MKRoute?
+    @State var route1: MKRoute?
+    @State var route2: MKRoute?
+//    @State var routes: [MKRoute?] = []
     @State var visibleRegion: MKCoordinateRegion?
     @State var destinationMapItems: [MKMapItem] = []
     @State var finalDestination: MKMapItem?
@@ -76,10 +79,17 @@ struct ContentView: View {
                     //
                     //                    Marker(item: selectedDestinationMapItem)
                     //                }
-                    if let route {
-                        MapPolyline(route)
+//                    var counter = 0
+//                    for index in routes {
+//                        counter += 1
+//                        print("counter: \(counter)")
+//                    }
+//                    let route1 = routes[0]
+                    
+                    MapPolyline(route!)
                             .stroke(.blue, lineWidth: 5)
-                    }
+                    
+                    
                     UserAnnotation()
                 }
                 .mapStyle(selectedMapOption.mapStyle)
@@ -108,15 +118,78 @@ struct ContentView: View {
                 .onMapCameraChange { context in
                     visibleRegion = context.region
                 }
+                
+//                MARK: - Calculate directions and routes
+                
                 .task(id: selectedMapItem){
-                    await route = requestCalculateDirections(selectedMapItem: selectedMapItem, locationManager: locationManager, transportationType: transportationType)
+//                    await route = requestCalculateDirections(selectedMapItem: selectedMapItem, locationManager: locationManager, transportationType: transportationType)
+                    //
+                    print("in task selectedMapItem")
+                    if let currentLocation = locationManager.manager.location {
+                        let begin = MKMapItem(placemark: MKPlacemark(coordinate: currentLocation.coordinate))
+                        await route = requestCalculateDirections(beginningMapItem: begin, endingMapItem: selectedMapItem, locationManager: locationManager, transportationType: transportationType)
+//                        if let route {
+//                            routes.append(route)
+//                        }
+                    }
+                        else {
+                        route = nil
+                    }
+                
+                   
                     //                showSearchView = true
-                    //                print("ContentView in .task selectedMapItem")
                 }
-                .toolbar{
+//MARK: - Calculate Route and directions to waypoint
+/*
+                .task(id: waypointDestination){
+                    print("in task waypointDestination")
+//                    routes.removeAll()
+                    if let currentLocation = locationManager.manager.location {
+                        let begin = MKMapItem(placemark: MKPlacemark(coordinate: currentLocation.coordinate))
+                        await route = requestCalculateDirections(beginningMapItem: begin, endingMapItem: waypointDestination, locationManager: locationManager, transportationType: transportationType)
+                        if let route {
+                            route1 = route
+//                            MapPolyline(route).stroke(.blue, lineWidth: 5)
+                        }
+                    }
+                        else {
+                        route = nil
+                    }
+                    
+                }
+                //MARK: - Calculate Route and directions to finalDestination
+                
+                .task(id: finalDestination){
+                    print("in task finalDestination - appending userLocation to waypoint")
+                    if waypointDestination == nil {
+//                        routes.removeAll()
+                        if let currentLocation = locationManager.manager.location {
+                            let begin = MKMapItem(placemark: MKPlacemark(coordinate: currentLocation.coordinate))
+                            await route = requestCalculateDirections(beginningMapItem: begin, endingMapItem: finalDestination, locationManager: locationManager, transportationType: transportationType)
+                            if let route {
+                                route1 = route
+                            }
+                            route1 = route
+                        }
+                        else {
+                            route = nil
+                        }
+                    } else {
+                        print("in task finalDestination - appending waypoint to final")
+
+                        await route = requestCalculateDirections(beginningMapItem: waypointDestination, endingMapItem: finalDestination, locationManager: locationManager, transportationType: transportationType)
+                        if let route {
+                            route2 = route
+                        } else {
+                            route = nil
+                        }
+                        
+                    }
+                }
+                
+ */               .toolbar{
                     ToolbarItemGroup(placement: .bottomBar) {
                         HStack{
-                            Spacer()
                             // MARK: - Search
                             Button{
                                 showSearchView = true
@@ -157,7 +230,7 @@ struct ContentView: View {
                                     .presentationDetents([.fraction(0.50),.fraction(0.75),.large])
                             }
                             
-                            padding([.leading, .trailing])
+//                            .padding([.leading, .trailing])
                             
                             // MARK: - Route
                             
@@ -181,7 +254,7 @@ struct ContentView: View {
                                 RouteView(showRouteView: $showRouteView, route: route, destination: $selectedMapItem, transportationType: $transportationType, distanceFormatter: distanceFormatter)
                                     .presentationDetents([.fraction(0.50),.fraction(0.75),.large])
                             }
-                            padding([.leading, .trailing])
+//                            .padding([.leading, .trailing])
                             
                             
                             // MARK: - Settings
@@ -200,7 +273,7 @@ struct ContentView: View {
                                 SettingsView(showSettingsView: $showSettingsView, selectedMapOption: $selectedMapOption, colorScheme: $colorScheme, transportationType: $transportationType, distanceFormatter: distanceFormatter)
                                     .presentationDetents([.large, .medium, .fraction(0.75), .fraction(0.50)])
                             }
-                            padding([.trailing])
+                            .padding([.trailing])
                             
                         } //HStack
                         

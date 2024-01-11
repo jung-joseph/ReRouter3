@@ -51,27 +51,6 @@ struct SearchOptionsView: View {
                     // get the current savedFavorites
                     
                     
-                    print("in FavoritesListView - onSubmit")
-                    /*
-                    do {
-                        if let data = UserDefaults.standard.data(forKey: "savedMapItems") {
-                            if let tempFavoriteMapItems = try NSKeyedUnarchiver.unarchivedArrayOfObjects(ofClass: MKMapItem.self, from: data){
-                                
-                                favoriteMapItems.removeAll()
-
-                                tempFavoriteMapItems.forEach { item in
-                                    print("mapItem Name: \(String(describing: item.name))")
-                                    favoriteMapItems.append(item)
-                                }
-                            }
-                        }
-                        
-                    } catch {
-                        print("try failed")
-                    }
-                    */
-                    
-                    
                     if let readFavoriteMapItems = readArrayUserDefaults(arrayIn: favoriteMapItems){
                         favoriteMapItems.removeAll()
                         print("appending old favoriteMapItems")
@@ -116,7 +95,12 @@ struct SearchOptionsView: View {
                 waypointDestination = nil
             } label: {
                 Text("Clear All Destinations")
+                    .frame(minHeight: 30)
+                    .lineLimit(nil)
+
+
             }
+
             .buttonStyle(.borderedProminent)
             .tint(finalDestination != nil || waypointDestination != nil ? .green : Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
             .foregroundColor(.black)
@@ -126,6 +110,8 @@ struct SearchOptionsView: View {
                 finalDestination = nil
             } label: {
                 Text("Clear Final Destination")
+                    .frame(minHeight: 30)
+                    .lineLimit(nil)
             }
             .buttonStyle(.borderedProminent)
             .tint(finalDestination != nil ? .green : Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
@@ -136,12 +122,17 @@ struct SearchOptionsView: View {
                 waypointDestination = nil
             } label: {
                 Text("Clear Waypoint Destination")
+                    .frame(minHeight: 30)
+                    .lineLimit(nil)
             }
             .buttonStyle(.borderedProminent)
             .tint(waypointDestination != nil ? .green :Color(red: 236/255, green: 240/255, blue: 241/255, opacity: 1.0))
             .foregroundColor(.black)
             .padding(4)
         }
+    
+        .font(.system(size: 12))
+
     }
 }
 

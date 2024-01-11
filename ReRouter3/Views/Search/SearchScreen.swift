@@ -142,18 +142,18 @@ struct SearchScreen: View {
                 
                 if !duplicateMapItem {
                     // save to destinationMapItem array (use as Recent Destinations)
-//                    print("Appending selectedMapItem")
+                    //                    print("Appending selectedMapItem")
                     destinationMapItems.append(selectedMapItem)
                 }
                 
-                await route = requestCalculateDirections(selectedMapItem: selectedMapItem, locationManager: locationManager, transportationType: transportationType)
+//               await route = requestCalculateDirections(selectedMapItem:selectedMapItem,locationManager:locationManager, transportationType: transportationType)
             }
-
+            
             
         }
-//        .task(id: selectedDestinationMapItem) {
-//            print("selectedDestinationMapItem not nil")
-//            await route = requestCalculateDirections(selectedMapItem: selectedDestinationMapItem, locationManager: locationManager, transportationType: transportationType)
+        //        .task(id: selectedDestinationMapItem) {
+        //            print("selectedDestinationMapItem not nil")
+        //            await route = requestCalculateDirections(selectedMapItem: selectedDestinationMapItem, locationManager: locationManager, transportationType: transportationType)
 //            
 //        }
         .task(id:isSearching, {
