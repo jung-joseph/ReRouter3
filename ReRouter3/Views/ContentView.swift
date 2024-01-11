@@ -85,10 +85,14 @@ struct ContentView: View {
 //                        print("counter: \(counter)")
 //                    }
 //                    let route1 = routes[0]
-                    
-                    MapPolyline(route!)
+                    if let route1 {
+                        MapPolyline(route1)
                             .stroke(.blue, lineWidth: 5)
-                    
+                    }
+                    if let route2 {
+                        MapPolyline(route2)
+                            .stroke(.blue, lineWidth: 5)
+                    }
                     
                     UserAnnotation()
                 }
@@ -140,7 +144,7 @@ struct ContentView: View {
                     //                showSearchView = true
                 }
 //MARK: - Calculate Route and directions to waypoint
-/*
+
                 .task(id: waypointDestination){
                     print("in task waypointDestination")
 //                    routes.removeAll()
@@ -149,7 +153,6 @@ struct ContentView: View {
                         await route = requestCalculateDirections(beginningMapItem: begin, endingMapItem: waypointDestination, locationManager: locationManager, transportationType: transportationType)
                         if let route {
                             route1 = route
-//                            MapPolyline(route).stroke(.blue, lineWidth: 5)
                         }
                     }
                         else {
@@ -169,7 +172,6 @@ struct ContentView: View {
                             if let route {
                                 route1 = route
                             }
-                            route1 = route
                         }
                         else {
                             route = nil
@@ -187,7 +189,7 @@ struct ContentView: View {
                     }
                 }
                 
- */               .toolbar{
+                .toolbar{
                     ToolbarItemGroup(placement: .bottomBar) {
                         HStack{
                             // MARK: - Search
@@ -251,7 +253,7 @@ struct ContentView: View {
                             }
                             
                             .sheet(isPresented: $showRouteView) {
-                                RouteView(showRouteView: $showRouteView, route: route, destination: $selectedMapItem, transportationType: $transportationType, distanceFormatter: distanceFormatter)
+                                RouteView(showRouteView: $showRouteView, route1: $route1, route2: $route2, destination: $selectedMapItem, transportationType: $transportationType, distanceFormatter: distanceFormatter)
                                     .presentationDetents([.fraction(0.50),.fraction(0.75),.large])
                             }
 //                            .padding([.leading, .trailing])

@@ -12,7 +12,8 @@ import Observation
 struct RouteView: View {
     
     @Binding var showRouteView: Bool
-    var route: MKRoute?
+    @Binding var route1: MKRoute?
+    @Binding var route2: MKRoute?
     @Binding var destination: MKMapItem?
     @Binding var transportationType: TransportationOptions
     @Bindable var distanceFormatter: DistanceFormatter
@@ -31,8 +32,8 @@ struct RouteView: View {
                 Text("Transportation Type: \(travelMode[Int(transportationType.transportationOption.rawValue)]!)")
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack(alignment: .leading){
-                        if route != nil {
-                            ForEach(route!.steps, id: \.self) { step in
+                        if route1 != nil {
+                            ForEach(route1!.steps, id: \.self) { step in
                                 HStack{
                                     let stepInstructions = step.instructions
                                     let iconName = self.directionsIcon(stepInstructions)
@@ -42,7 +43,21 @@ struct RouteView: View {
                                     Text(step.instructions)
                                 }
                             }
-                        } else {
+                        } 
+                        if route2 != nil {
+                            ForEach(route2!.steps, id: \.self) { step in
+                                HStack{
+                                    let stepInstructions = step.instructions
+                                    let iconName = self.directionsIcon(stepInstructions)
+                                    let formattedDistance = "\(distanceFormatter.format(distanceInMeters: step.distance))"
+                                    Image(systemName: iconName)
+                                    Text(formattedDistance)
+                                    Text(step.instructions)
+                                }
+                            }
+                        }
+                        
+                    if route1 == nil && route2 == nil {
                             Spacer(minLength: 50)
                             Text("No Active Routes")
                         }
